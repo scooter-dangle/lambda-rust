@@ -1,5 +1,5 @@
 VERSION ?= 0.6.0
-RUST_VERSION ?= 1.56.1
+RUST_VERSION ?= 1.57.0
 REPO ?= scoots/lambda-rust
 TAG ?= "$(REPO):$(VERSION)-rust-$(RUST_VERSION)"
 
