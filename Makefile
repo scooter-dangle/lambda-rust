@@ -1,5 +1,5 @@
-VERSION ?= 0.6.0
-RUST_VERSION ?= 1.60.0
+VERSION ?= 0.7.0
+RUST_VERSION ?= "$(shell cat ./RUST_VERSION)"
 REPO ?= scoots/lambda-rust
 TAG ?= "$(REPO):$(VERSION)-rust-$(RUST_VERSION)"
 
@@ -27,3 +27,12 @@ debug: build
 		--volume ${HOME}/.cargo/git:/cargo/git  \
 		--entrypoint=/bin/bash \
 		$(REPO)
+
+bump:
+	@git checkout main
+	@git pull --rebase --autostash
+	@printf $(RUST_VERSION) > ./RUST_VERSION
+	@git commit --message "feat: $(RUST_VERSION)" -- ./RUST_VERSION
+	@git tag v$(VERSION)-rust-$(RUST_VERSION)
+	@git push
+	@git push --tags
